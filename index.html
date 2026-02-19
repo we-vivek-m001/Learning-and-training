@@ -1,0 +1,65 @@
+  <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+<form id="form" onsubmit="getValue(event)">
+<label >Name:</label>
+<input id="nameData" type="text" placeholder="enter your name">
+<label >Email</label>
+<input id="emailData" type="text" placeholder="email">
+<button>Submit</button>
+
+
+<ol id = "list">
+
+</ol>
+
+</form>
+   
+   <script >
+
+function getValue(event){
+ event.preventDefault();
+
+let valName = document.getElementById("nameData").value;
+let valEmail = document.getElementById("emailData").value;
+console.log(valName);
+
+const ul = document.getElementById("list")
+li = document.createElement("li");
+     
+ li.textContent = valName+"  "+ valEmail;
+ 
+ 
+const deleteBtn = document.createElement("Button");
+      deleteBtn.textContent=("delete");
+
+      deleteBtn.addEventListener("click", function(){
+        document.getElementById("list").remove(li);
+    });
+
+
+      li.appendChild(deleteBtn);
+      ul.appendChild(li);      
+
+
+document.getElementById("nameData").value="";
+document.getElementById("emailData").value="";
+
+}
+
+
+
+    </script>
+</body>
+</html> 
+  
+
+
+
+  
