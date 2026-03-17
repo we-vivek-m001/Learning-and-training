@@ -1,0 +1,5 @@
+<template>
+    <div>
+        <h2> I'm a footer</h2>
+    </div>
+    </template>

@@ -2,14 +2,45 @@
 
 <script setup>
     const route = useRoute();
+  const {data: products} = await useFetch('https://fakestoreapi.com/products' )
+  
+//   const {id} = useRoute().params
+//   const url = 'https://fakestoreapi.com/products' + id
+  
+//   const {data: product} = await useFetch(url);
+
+   //const {data: products, pending, error } = await useFetch(`https://fakestoreapi.com/products/${route.params.id}`)
+
+
+
+useHead({
+  title: 'Products Page',
+  meta: [
+    {
+      name: 'description',
+      content: 'List of all products'
+    }
+  ]
+})
+
+
+
  </script>
 <template>
 <div> 
     <h2>  product dynamic page</h2>
-     <p>you are viewing product with ID: {{route.params.id}} </p>
-     <NuxtLink to="/contact"> Contactm</NuxtLink> <br>
-     <NuxtLink to="/products"> product</NuxtLink>
-     <NuxtLink to="/products/1"> dynamic 1</NuxtLink> <br>
-     <NuxtLink to="/blogs"> blog</NuxtLink>
+    
+     
+     <div v-for = "p in products">
+        <NuxtLink :to="`/products/${p.id}`"> {{ p.title }}</NuxtLink>
+
+
+    
+
+    
+
+
+     </div>
+     <ProductCard />
 </div>    
 </template>
