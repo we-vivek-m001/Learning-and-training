@@ -1,6 +1,9 @@
 
 
 <script setup>
+import Usefetch from './usefetch.vue';
+
+
     const route = useRoute();
   const {data: products} = await useFetch('https://fakestoreapi.com/products' )
   
