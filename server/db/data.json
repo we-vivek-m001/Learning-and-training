@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "name": "Laptop",
+    "price": 40000,
+    "category": "electronics"
+  },
+  {
+    "id": 2,
+    "name": "speaker",
+    "price": 10000,
+    "category": "electronics"
+  },
+  {
+    "id": 3,
+    "name": "TV",
+    "price": 30000,
+    "category": "electronics"
+  },
+  {
+    "id": 5,
+    "name": "stand",
+    "price": 500,
+    "category": "tool"
+  }
+]

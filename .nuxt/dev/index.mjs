@@ -1,10 +1,11 @@
 import process from 'node:process';globalThis._importMeta_={url:import.meta.url,env:process.env};import { tmpdir } from 'node:os';
 import { Server } from 'node:http';
-import { resolve, dirname, join } from 'node:path';
+import path, { resolve, dirname, join } from 'node:path';
 import nodeCrypto from 'node:crypto';
 import { parentPort, threadId } from 'node:worker_threads';
 import { defineEventHandler, handleCacheHeaders, splitCookiesString, createEvent, fetchWithEvent, isEvent, eventHandler, setHeaders, sendRedirect, proxyRequest, getRequestHeader, setResponseHeaders, setResponseStatus, send, getRequestHeaders, setResponseHeader, appendResponseHeader, getRequestURL, getResponseHeader, removeResponseHeader, createError, getQuery as getQuery$1, readBody, createApp, createRouter as createRouter$1, toNodeListener, lazyEventHandler, getResponseStatus, getRouterParam, getResponseStatusText } from 'file://C:/Users/user1/Desktop/Nuxt/node_modules/h3/dist/index.mjs';
 import { escapeHtml } from 'file://C:/Users/user1/Desktop/Nuxt/node_modules/@vue/shared/dist/shared.cjs.js';
+import { promises } from 'node:fs';
 import { createRenderer, getRequestDependencies, getPreloadLinks, getPrefetchLinks } from 'file://C:/Users/user1/Desktop/Nuxt/node_modules/vue-bundle-renderer/dist/runtime.mjs';
 import { parseURL, withoutBase, joinURL, getQuery, withQuery, withTrailingSlash, decodePath, withLeadingSlash, withoutTrailingSlash, joinRelativeURL } from 'file://C:/Users/user1/Desktop/Nuxt/node_modules/ufo/dist/index.mjs';
 import destr, { destr as destr$1 } from 'file://C:/Users/user1/Desktop/Nuxt/node_modules/destr/dist/index.mjs';
@@ -30,7 +31,6 @@ import { SourceMapConsumer } from 'file://C:/Users/user1/Desktop/Nuxt/node_modul
 import { AsyncLocalStorage } from 'node:async_hooks';
 import { getContext } from 'file://C:/Users/user1/Desktop/Nuxt/node_modules/unctx/dist/index.mjs';
 import { captureRawStackTrace, parseRawStackTrace } from 'file://C:/Users/user1/Desktop/Nuxt/node_modules/errx/dist/index.js';
-import { promises } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname as dirname$1, resolve as resolve$1 } from 'file://C:/Users/user1/Desktop/Nuxt/node_modules/pathe/dist/index.mjs';
 import { walkResolver } from 'file://C:/Users/user1/Desktop/Nuxt/node_modules/unhead/dist/utils.mjs';
@@ -2580,10 +2580,18 @@ async function getIslandContext(event) {
 	return ctx;
 }
 
+const _lazy_pdbp6n = () => Promise.resolve().then(function () { return hello$1; });
+const _lazy_eBFxQL = () => Promise.resolve().then(function () { return _id__get$1; });
+const _lazy_uCWxUQ = () => Promise.resolve().then(function () { return index_get$1; });
+const _lazy_tuPtOQ = () => Promise.resolve().then(function () { return index_post$1; });
 const _lazy__d2Y7U = () => Promise.resolve().then(function () { return renderer$1; });
 
 const handlers = [
   { route: '', handler: _UXVkiQ, lazy: false, middleware: true, method: undefined },
+  { route: '/api/hello', handler: _lazy_pdbp6n, lazy: true, middleware: false, method: undefined },
+  { route: '/api/items/:id', handler: _lazy_eBFxQL, lazy: true, middleware: false, method: "get" },
+  { route: '/api/items', handler: _lazy_uCWxUQ, lazy: true, middleware: false, method: "get" },
+  { route: '/api/items', handler: _lazy_tuPtOQ, lazy: true, middleware: false, method: "post" },
   { route: '/__nuxt_error', handler: _lazy__d2Y7U, lazy: true, middleware: false, method: undefined },
   { route: '/__nuxt_island/**', handler: _SxA8c9, lazy: false, middleware: false, method: undefined },
   { route: '/**', handler: _lazy__d2Y7U, lazy: true, middleware: false, method: undefined }
@@ -2924,6 +2932,102 @@ const styles = {};
 const styles$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
   __proto__: null,
   default: styles
+}, Symbol.toStringTag, { value: 'Module' }));
+
+const hello = defineEventHandler(() => {
+  return { message: "Hello from server" };
+});
+
+const hello$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
+  __proto__: null,
+  default: hello
+}, Symbol.toStringTag, { value: 'Module' }));
+
+const dataPath = path.resolve("server/db/data.json");
+async function readData() {
+  try {
+    const file = await promises.readFile(dataPath, "utf-8");
+    return JSON.parse(file);
+  } catch (error) {
+    throw createError({
+      statusCode: 500,
+      statusMessage: "unable to read data"
+    });
+  }
+}
+async function writeData(data) {
+  try {
+    const file = await promises.writeFile(dataPath, JSON.stringify(data, null, 2));
+  } catch (error) {
+    throw createError({
+      statusCode: 500,
+      statusMessage: "unable to write data"
+    });
+  }
+}
+
+const _id__get = defineEventHandler(async (event) => {
+  const { id } = event.context.params;
+  const data = await readData();
+  const item = data.find((item2) => item2.id === Number(id));
+  if (!item) {
+    throw createError({
+      statusCode: 404,
+      statusMessage: "item not found"
+    });
+  }
+  return {
+    success: true,
+    data: item
+  };
+});
+
+const _id__get$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
+  __proto__: null,
+  default: _id__get
+}, Symbol.toStringTag, { value: 'Module' }));
+
+const index_get = defineEventHandler(async (event) => {
+  const data = await readData();
+  return {
+    success: true,
+    count: data.length,
+    data
+  };
+});
+
+const index_get$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
+  __proto__: null,
+  default: index_get
+}, Symbol.toStringTag, { value: 'Module' }));
+
+const index_post = defineEventHandler(async (event) => {
+  try {
+    const body = await readBody(event);
+    if (!body || Object.keys(body).length === 0) {
+      throw createError({
+        statusCode: 400,
+        statusMessage: "Request body is required!"
+      });
+    }
+    const data = await readData();
+    data.push(body);
+    await writeData(data);
+    return {
+      message: "Data added successfully",
+      data
+    };
+  } catch (error) {
+    throw createError({
+      statusCode: error.statusCode || 500,
+      statusMessage: error.statusMessage || "Something went wrong"
+    });
+  }
+});
+
+const index_post$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
+  __proto__: null,
+  default: index_post
 }, Symbol.toStringTag, { value: 'Module' }));
 
 function renderPayloadResponse(ssrContext) {
