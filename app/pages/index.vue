@@ -1,6 +1,7 @@
 
 
 <script setup>
+import NewComponent from '~/components/newComponent.vue';
 import Usefetch from './usefetch.vue';
 
 
@@ -35,7 +36,7 @@ useHead({
     
      
      <div v-for = "p in products">
-        <NuxtLink :to="`/products/${p.id}`"> {{ p.title }}</NuxtLink>
+        <!-- <NuxtLink :to="`/products/${p.id}`"> {{ p.title }}</NuxtLink> -->
 
 
     
@@ -44,6 +45,7 @@ useHead({
 
 
      </div>
+     <NewComponent/>
      <ProductCard />
 </div>    
 </template>
