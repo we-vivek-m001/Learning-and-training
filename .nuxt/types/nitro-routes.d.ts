@@ -8,10 +8,17 @@ declare module "nitropack/types" {
     }
     '/api/items/:id': {
       'get': Simplify<Serialize<Awaited<ReturnType<typeof import('../../server/api/items/[id].get').default>>>>
+      'patch': Simplify<Serialize<Awaited<ReturnType<typeof import('../../server/api/items/[id].patch').default>>>>
     }
     '/api/items': {
       'get': Simplify<Serialize<Awaited<ReturnType<typeof import('../../server/api/items/index.get').default>>>>
       'post': Simplify<Serialize<Awaited<ReturnType<typeof import('../../server/api/items/index.post').default>>>>
+    }
+    '/api/items/register': {
+      'default': Simplify<Serialize<Awaited<ReturnType<typeof import('../../server/api/items/register').default>>>>
+    }
+    '/api/items/user': {
+      'default': Simplify<Serialize<Awaited<ReturnType<typeof import('../../server/api/items/user').default>>>>
     }
     '/__nuxt_error': {
       'default': Simplify<Serialize<Awaited<ReturnType<typeof import('../../node_modules/@nuxt/nitro-server/dist/runtime/handlers/renderer').default>>>>

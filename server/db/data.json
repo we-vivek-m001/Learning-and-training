@@ -20,7 +20,7 @@
   {
     "id": 5,
     "name": "stand",
-    "price": 500,
+    "price": 1000,
     "category": "tool"
   }
 ]

@@ -13,6 +13,8 @@ definePageMeta({
     if (to.path === '/products/about') {
       return navigateTo('/products/admin')
     }
+
+    
   }
 })
 

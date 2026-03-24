@@ -1,5 +1,6 @@
 export default defineNuxtRouteMiddleware((to, from) => {
     console.log("runs on every page")
+
 }
 )
 

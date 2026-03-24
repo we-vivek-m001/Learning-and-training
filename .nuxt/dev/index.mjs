@@ -2132,7 +2132,22 @@ const plugins = [
 _CbQIJPZ8VXqx9C6JuR4qJTapUsAkqXxA87TFDHLwJ4
 ];
 
-const assets = {};
+const assets = {
+  "/index.mjs.map": {
+    "type": "application/json",
+    "etag": "\"6c3f8-/MQNzjDUq0pG2AkhEgpREIKuswU\"",
+    "mtime": "2026-03-24T10:50:19.421Z",
+    "size": 443384,
+    "path": "index.mjs.map"
+  },
+  "/index.mjs": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"1afc5-JaKdyN0p8Nkx4qDCtimySfqGxu8\"",
+    "mtime": "2026-03-24T10:50:19.421Z",
+    "size": 110533,
+    "path": "index.mjs"
+  }
+};
 
 function readAsset (id) {
   const serverDir = dirname$1(fileURLToPath(globalThis._importMeta_.url));
@@ -2582,16 +2597,22 @@ async function getIslandContext(event) {
 
 const _lazy_pdbp6n = () => Promise.resolve().then(function () { return hello$1; });
 const _lazy_eBFxQL = () => Promise.resolve().then(function () { return _id__get$1; });
+const _lazy_DBC7HI = () => Promise.resolve().then(function () { return _id__patch$1; });
 const _lazy_uCWxUQ = () => Promise.resolve().then(function () { return index_get$1; });
 const _lazy_tuPtOQ = () => Promise.resolve().then(function () { return index_post$1; });
+const _lazy_jDcSzK = () => Promise.resolve().then(function () { return register$1; });
+const _lazy_uEQUnX = () => Promise.resolve().then(function () { return user$1; });
 const _lazy__d2Y7U = () => Promise.resolve().then(function () { return renderer$1; });
 
 const handlers = [
   { route: '', handler: _UXVkiQ, lazy: false, middleware: true, method: undefined },
   { route: '/api/hello', handler: _lazy_pdbp6n, lazy: true, middleware: false, method: undefined },
   { route: '/api/items/:id', handler: _lazy_eBFxQL, lazy: true, middleware: false, method: "get" },
+  { route: '/api/items/:id', handler: _lazy_DBC7HI, lazy: true, middleware: false, method: "patch" },
   { route: '/api/items', handler: _lazy_uCWxUQ, lazy: true, middleware: false, method: "get" },
   { route: '/api/items', handler: _lazy_tuPtOQ, lazy: true, middleware: false, method: "post" },
+  { route: '/api/items/register', handler: _lazy_jDcSzK, lazy: true, middleware: false, method: undefined },
+  { route: '/api/items/user', handler: _lazy_uEQUnX, lazy: true, middleware: false, method: undefined },
   { route: '/__nuxt_error', handler: _lazy__d2Y7U, lazy: true, middleware: false, method: undefined },
   { route: '/__nuxt_island/**', handler: _SxA8c9, lazy: false, middleware: false, method: undefined },
   { route: '/**', handler: _lazy__d2Y7U, lazy: true, middleware: false, method: undefined }
@@ -2987,6 +3008,55 @@ const _id__get$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty
   default: _id__get
 }, Symbol.toStringTag, { value: 'Module' }));
 
+const _id__patch = defineEventHandler(async (event) => {
+  try {
+    const id = Number(event.context.params.id);
+    if (isNaN(id)) {
+      throw createError({
+        statusCode: 400,
+        statusMessage: "Invalid id"
+      });
+    }
+    const body = await readBody(event);
+    if (!body || Object.keys(body).length === 0) {
+      throw createError({
+        statusCode: 400,
+        statusMessage: "At least one field is required"
+      });
+    }
+    const data = await readData();
+    const itemIndex = data.findIndex((item) => item.id === id);
+    if (itemIndex === -1) {
+      throw createError({
+        statusCode: 404,
+        statusMessage: "Item not found"
+      });
+    }
+    const existingItem = data[itemIndex];
+    const updatedItem = {
+      ...existingItem,
+      ...body
+    };
+    data[itemIndex] = updatedItem;
+    await writeData(data);
+    return {
+      success: true,
+      message: "Item updated successfully",
+      data: updatedItem
+    };
+  } catch (error) {
+    throw createError({
+      statusCode: error.statusCode || 500,
+      statusMessage: error.statusMessage || "Something went wrong"
+    });
+  }
+});
+
+const _id__patch$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
+  __proto__: null,
+  default: _id__patch
+}, Symbol.toStringTag, { value: 'Module' }));
+
 const index_get = defineEventHandler(async (event) => {
   const data = await readData();
   return {
@@ -3028,6 +3098,32 @@ const index_post = defineEventHandler(async (event) => {
 const index_post$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
   __proto__: null,
   default: index_post
+}, Symbol.toStringTag, { value: 'Module' }));
+
+const register = defineEventHandler(async (event) => {
+  const body = await readBody(event);
+  return {
+    message: "user registered successfully",
+    data: body
+  };
+});
+
+const register$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
+  __proto__: null,
+  default: register
+}, Symbol.toStringTag, { value: 'Module' }));
+
+const user = defineEventHandler((e) => {
+  const query = getQuery$1(e);
+  return {
+    message: "Query received",
+    query
+  };
+});
+
+const user$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
+  __proto__: null,
+  default: user
 }, Symbol.toStringTag, { value: 'Module' }));
 
 function renderPayloadResponse(ssrContext) {
